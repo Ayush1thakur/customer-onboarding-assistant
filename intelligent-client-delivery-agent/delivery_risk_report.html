@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAQ Software - Intelligent Client Delivery Status Report</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-red: #f43f5e;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --border-color: #334155;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            color: var(--accent-blue);
+            font-size: 26px;
+        }
+        .header p {
+            margin: 4px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .metric-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .metric-card .val {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .val-total { color: var(--accent-blue); }
+        .val-risk { color: var(--accent-red); }
+        .val-healthy { color: var(--accent-green); }
+
+        .table-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th {
+            background-color: #0f172a;
+            color: var(--accent-blue);
+            padding: 16px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            vertical-align: top;
+        }
+        tr:last-child td { border-bottom: none; }
+        .project-row:hover { background-color: #283548; }
+        .row-at-risk { background-color: rgba(244, 63, 94, 0.05); }
+        .pid-cell { font-weight: bold; font-family: monospace; font-size: 15px; color: var(--accent-blue); }
+        .score-cell { font-size: 16px; }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .risk-badge-red {
+            background-color: rgba(244, 63, 94, 0.2);
+            color: #f43f5e;
+            border: 1px solid #f43f5e;
+        }
+        .risk-badge-green {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .reasons-list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text-muted);
+        }
+        .reasons-list li { margin-bottom: 4px; }
+
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MAQ Software — Intelligent Client Delivery Agent</h1>
+            <p><strong>Query:</strong> "What is the total num of bugs in all the reports except PBI-009"</p>
+            <p><strong>Generated At:</strong> 2026-09-15 22:24:04 | <strong>Grounding:</strong> SharePoint + Azure DevOps FastMCP + D365 Timesheets</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="title">Active Projects Monitored</div>
+                <div class="val val-total">9</div>
+            </div>
+            <div class="metric-card">
+                <div class="title">Projects At Risk</div>
+                <div class="val val-risk">9</div>
+            </div>
+            <div class="metric-card">
+                <div class="title">Healthy Projects</div>
+                <div class="val val-healthy">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project ID</th>
+                        <th>Health Status</th>
+                        <th>Risk Score</th>
+                        <th>DevOps Telemetry</th>
+                        <th>Logged / Estimated Hours</th>
+                        <th>Risk Flags & Mitigation Reasons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-001</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>2 bugs | 45 days left</td>
+            <td>75.0h / 90.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-06</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-009</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>1 bugs | 45 days left</td>
+            <td>57.0h / 72.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-03</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-003</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>20</strong> / 100</td>
+            <td>2 bugs | 10 days left</td>
+            <td>72.0h / 90.0h</td>
+            <td><ul class="reasons-list"><li>Velocity drop risk (score=0.133)</li><li>Status 'Yellow' last updated 2026-08-20</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-002</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>1 bugs | 45 days left</td>
+            <td>63.0h / 75.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-05</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-008</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>75</strong> / 100</td>
+            <td>3 bugs | 45 days left</td>
+            <td>103.0h / 105.0h</td>
+            <td><ul class="reasons-list"><li>Velocity drop risk (score=1.0)</li><li>Logged 103.0h of 105.0h estimated</li><li>Status 'Yellow' last updated 2026-08-25</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-007</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>0 bugs | 45 days left</td>
+            <td>69.0h / 84.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-06</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-006</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>2 bugs | 45 days left</td>
+            <td>54.0h / 66.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-01</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-004</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>15</strong> / 100</td>
+            <td>1 bugs | 45 days left</td>
+            <td>48.0h / 60.0h</td>
+            <td><ul class="reasons-list"><li>Status 'Green' last updated 2026-09-04</li></ul></td>
+        </tr>
+        
+        <tr class="project-row row-at-risk">
+            <td class="pid-cell">PBI-005</td>
+            <td><span class="status-badge risk-badge-red">AT RISK</span></td>
+            <td class="score-cell"><strong>100</strong> / 100</td>
+            <td>9 bugs | 10 days left</td>
+            <td>125.0h / 120.0h</td>
+            <td><ul class="reasons-list"><li>Velocity drop risk (score=1.0)</li><li>9 open bugs with only 10 days to deadline</li><li>Logged 125.0h of 120.0h estimated</li><li>Status 'Red' last updated 2026-08-15</li></ul></td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            MAQ Software Delivery Intelligence Engine • Step Up Stack Available for Production (Azure AI Foundry + Entra ID)
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+project_id,project_name,status_color,last_updated,manager
+PBI-001,Retail Sales Dashboard Refresh,Green,2026-09-06,Alice Nguyen
+PBI-002,Finance Close Automation Dashboard,Green,2026-09-05,Brian Osei
+PBI-003,Supply Chain Visibility Suite,Yellow,2026-08-20,Carla Mendes
+PBI-004,HR Workforce Analytics,Green,2026-09-04,Alice Nguyen
+PBI-005,Customer 360 Executive Dashboard,Red,2026-08-15,Deepa Rao
+PBI-006,Marketing Campaign ROI Tracker,Green,2026-09-01,Brian Osei
+PBI-007,Manufacturing Quality Metrics,Green,2026-09-06,Carla Mendes
+PBI-008,Logistics Fleet Utilization,Yellow,2026-08-25,Deepa Rao
+PBI-009,Procurement Spend Analytics,Green,2026-09-03,Alice Nguyen
